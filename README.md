@@ -26,7 +26,7 @@ cp g810-led /usr/bin
 
 Profiles :<br />
 mkdir /etc/g810<br />
-cp profile1 /etc/g810
+cp sampleprofile /etc/g810/profile1
 
 
 SystemD unit in Arch Linux (For set profile at boot time) :<br />

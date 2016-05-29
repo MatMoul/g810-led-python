@@ -17,6 +17,7 @@ g810-led {profilefile}
 Samples :
 g810-led F1 ff0000
 g810-led /etc/g810/profile1
+g810-led sampleprofile
 
 
 Install (Copy g810-led in /usr/bin) :

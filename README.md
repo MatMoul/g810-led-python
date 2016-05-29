@@ -2,44 +2,44 @@
 
 Linux led controller for the Logitech G810 Keyboard
 
-This is first short... Wait for a more polished version...
+This is a first short... Wait for a more polished version...
 
-At this time, work on only at root or with sudo.
+At this time, work only as root or with sudo.
 
 Dependencies :
 - Python2
 - pyusb
 
-Use :
-g810-led {key} {color}
+Use :<br />
+g810-led {key} {color}<br />
 g810-led {profilefile}
 
-Samples :
-g810-led F1 ff0000
-g810-led /etc/g810/profile1
+Samples :<br />
+g810-led F1 ff0000<br />
+g810-led /etc/g810/profile1<br />
 g810-led sampleprofile
 
 
-Install (Copy g810-led in /usr/bin) :
+Install (Copy g810-led in /usr/bin) :<br />
 cp g810-led /usr/bin
 
 
-Profiles :
-mkdir /etc/g810
+Profiles :<br />
+mkdir /etc/g810<br />
 cp profile1 /etc/g810
 
 
-SystemD unit in Arch Linux (For set profile at boot time) :
-cat << EOF > /usr/lib/systemd/system/g810-led.service
-[Unit]
+SystemD unit in Arch Linux (For set profile at boot time) :<br />
+cat << EOF > /usr/lib/systemd/system/g810-led.service<br />
+[Unit]<br />
 Description=Set Logitech G810 Led Profile
 
-[Service]
+[Service]<br />
 ExecStart=/bin/g810-led /etc/g810/profile1
 
-[Install]
-WantedBy=multi-user.target
+[Install]<br />
+WantedBy=multi-user.target<br />
 EOF
 
-systemctl start g810-led
+systemctl start g810-led<br />
 systemctl enable g810-led

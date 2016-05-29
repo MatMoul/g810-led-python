@@ -1,0 +1,253 @@
+#!/usr/bin/python2
+
+import sys
+import os.path
+import imp
+import usb.core
+import usb.util
+
+
+dev = None
+intf = None
+
+
+def help():
+  print 'Use :'
+  print 'g810-led {key} {color}'
+  print 'g810-led {profilefile}'
+
+def main():
+  if len(sys.argv) == 2:
+    profilefile = sys.argv[1]
+    if os.path.exists(profilefile) is True:
+      try:
+        g810profile = imp.load_source('g810profile', profilefile)
+      except:
+        print 'Error loading profile file, exiting...'
+        sys.exit()
+      if g810profile is None:
+        print "Nothing to do, exiting..."
+        sys.exit()
+      applyProfile(g810profile)
+  elif len(sys.argv) == 3:
+    attachKeyboard()
+    setKeyColor(sys.argv[1], sys.argv[2])
+    updateKeyboard()
+    detachKeyboard()
+
+
+def applyProfile(profile):
+  keys = dir(profile)
+  attachKeyboard()
+  for key in keys:
+    color = eval('profile.'+key)
+    if color is not None:
+      if len(color) == 6:
+        setKeyColor(key, color)
+  updateKeyboard()
+  detachKeyboard()
+
+
+
+def attachKeyboard():
+  global dev
+  global intf
+  dev = usb.core.find(idVendor=0x046d, idProduct=0xc331)
+  if dev is None:
+    print 'Device not found, exiting...'
+    sys.exit()
+  intf = 1
+  if dev.is_kernel_driver_active(intf) is True:
+    dev.detach_kernel_driver(intf)
+    usb.util.claim_interface(dev, intf)
+
+
+def detachKeyboard():
+  global dev
+  global intf
+  if intf is not None:
+    usb.util.release_interface(dev, intf)
+    dev.attach_kernel_driver(intf)
+    dev = None
+    intf = None
+
+
+def updateKeyboard():
+  global dev
+  try:
+    data = '11ff0c5a00000000000000000000000000000000'
+    data = [ int(''.join([data[i], data[i+1]]), base=16) for i in range(0, len(data), 2)]
+    dev.ctrl_transfer(0x21,0x09,0x0211,1,data)
+  except:
+    print 'Error updating keyboard'
+
+
+def setKeyColor(key, color):
+  ext = True
+  key = key.lower()
+  if key == 'logo':
+    base = '11ff0c3a00100001'
+    key = '01'
+    ext = False
+  elif (key == 'backlight') or (key == 'light'):
+    base = '12ff0c3a00400005'
+    key = '01'
+  elif (key == 'gamemode') or (key == 'game'):
+    base = '12ff0c3a00400005'
+    key = '02'
+  elif (key == 'capsindicator') or (key == 'caps'):
+    base = '12ff0c3a00400005'
+    key = '03'
+  elif (key == 'scollindicator') or (key == 'scoll'):
+    base = '12ff0c3a00400005'
+    key = '04'
+  elif (key == 'numindicator') or (key == 'num'):
+    base = '12ff0c3a00400005'
+    key = '05'
+  elif key == 'next':
+    base = '12ff0c3a00020005'
+    key = 'b5'
+  elif key == 'prev':
+    base = '12ff0c3a00020005'
+    key = 'b6'
+  elif key == 'stop':
+    base = '12ff0c3a00020005'
+    key = 'b7'
+  elif (key == 'playpause') or (key == 'play' or (key == 'pause')):
+    base = '12ff0c3a00020005'
+    key = 'cd'
+  elif key == 'mute':
+    base = '12ff0c3a00020005'
+    key = 'e2'
+  else:
+    base = '12ff0c3a0001000e'
+    if key == 'a': key = '04'
+    elif key == 'b': key = '05'
+    elif key == 'c': key = '06'
+    elif key == 'd': key = '07'
+    elif key == 'e': key = '08'
+    elif key == 'f': key = '09'
+    elif key == 'g': key = '0a'
+    elif key == 'h': key = '0b'
+    elif key == 'i': key = '0c'
+    elif key == 'j': key = '0d'
+    elif key == 'k': key = '0e'
+    elif key == 'l': key = '0f'
+    elif key == 'm': key = '10'
+    elif key == 'n': key = '11'
+    elif key == 'o': key = '12'
+    elif key == 'p': key = '13'
+    elif key == 'q': key = '14'
+    elif key == 'r': key = '15'
+    elif key == 's': key = '16'
+    elif key == 't': key = '17'
+    elif key == 'u': key = '18'
+    elif key == 'v': key = '19'
+    elif key == 'w': key = '1a'
+    elif key == 'x': key = '1b'
+    elif key == 'z': key = '1c'
+    elif key == 'y': key = '1d'
+    elif (key == 'one') or (key == '1') or (key == 'n1'): key = '1e'
+    elif (key == 'two') or (key == '2') or (key == 'n2'): key = '1f'
+    elif (key == 'three') or (key == '3') or (key == 'n3'): key = '20'
+    elif (key == 'four') or (key == '4') or (key == 'n4'): key = '21'
+    elif (key == 'five') or (key == '5') or (key == 'n5'): key = '22'
+    elif (key == 'six') or (key == '6') or (key == 'n6'): key = '23'
+    elif (key == 'seven') or (key == '7') or (key == 'n7'): key = '24'
+    elif (key == 'eight') or (key == '8') or (key == 'n8'): key = '25'
+    elif (key == 'nine') or (key == '9') or (key == 'n9'): key = '26'
+    elif (key == 'zero') or (key == '0') or (key == 'n0'): key = '27'
+    elif key == 'enter': key = '28'
+    elif (key == 'escape') or (key == 'esc'): key = '29'
+    elif (key == 'backspace') or (key == 'back'): key = '2a'
+    elif key == 'tab': key = '2b'
+    elif key == 'space': key = '2c'
+    elif (key == 'apostrophe') or (key == '?') or (key == "'"): key = '2d'
+    elif (key == 'tidle') or (key == '^'): key = '2e'
+    elif (key == 'open_bracket') or (key == 'openbracket') or (key == 'egrave'): key = '2f'
+    elif (key == 'close_bracket') or (key == 'closebracket') or (key == '!'): key = '30'
+    elif (key == '$') or (key == 'dollar'): key = '32'
+    elif key == 'eaigu': key = '33'
+    elif key == 'agrave': key = '34'
+    elif key == 'degre': key = '35'
+    elif (key == 'comma') or (key == ','): key = '36'
+    elif (key == 'dot') or (key == '.'): key = '37'
+    elif (key == 'minus') or (key == '-'): key = '38'
+    elif (key == 'caps_lock') or (key == 'capslock'): key = '39'
+    elif key == 'f1': key = '3a'
+    elif key == 'f2': key = '3b'
+    elif key == 'f3': key = '3c'
+    elif key == 'f4': key = '3d'
+    elif key == 'f5': key = '3e'
+    elif key == 'f6': key = '3f'
+    elif key == 'f7': key = '40'
+    elif key == 'f8': key = '41'
+    elif key == 'f9': key = '42'
+    elif key == 'f10': key = '43'
+    elif key == 'f11': key = '44'
+    elif key == 'f12': key = '45'
+    elif (key == 'print_screen') or (key == 'printscreen') or (key == 'printscr') or (key == 'print'): key = '46'
+    elif (key == 'scroll_lock') or (key == 'scrolllock'): key = '47'
+    elif (key == 'pause_break') or (key == 'pausebreak') or (key == 'breack'): key = '48'
+    elif key == 'insert': key = '49'
+    elif key == 'home': key = '4a'
+    elif (key == 'page_up') or (key == 'pageup'): key = '4b'
+    elif (key == 'delete') or (key == 'del'): key = '4c'
+    elif key == 'end': key = '4d'
+    elif (key == 'page_down') or (key == 'pagedown'): key = '4e'
+    elif (key == 'arrowright') or (key == 'right'): key = '4f'
+    elif (key == 'arrowleft') or (key == 'left'): key = '50'
+    elif (key == 'arrowbottom') or (key == 'bottom'): key = '51'
+    elif (key == 'arrowtop') or (key == 'top'): key = '52'
+    elif (key == 'num_lock') or (key == 'numlock'): key = '53'
+    elif (key == 'num/') or (key == 'num_slash') or (key == 'numslash'): key = '54'
+    elif (key == 'num*') or (key == 'num_asterisk') or (key == 'numasterisk'): key = '55'
+    elif (key == 'num-') or (key == 'num_minus') or (key == 'numminus'): key = '56'
+    elif (key == 'num+') or (key == 'num_plus') or (key == 'numplus'): key = '57'
+    elif key == 'numenter': key = '58'
+    elif key == 'num1': key = '59'
+    elif key == 'num2': key = '5a'
+    elif key == 'num3': key = '5b'
+    elif key == 'num4': key = '5c'
+    elif key == 'num5': key = '5d'
+    elif key == 'num6': key = '5e'
+    elif key == 'num7': key = '5f'
+    elif key == 'num8': key = '60'
+    elif key == 'num9': key = '61'
+    elif key == 'num0': key = '62'
+    elif (key == 'num.') or (key == 'numdot'): key = '63'
+    elif (key == '<') or (key == '>') or (key == 'backslash'): key = '64'
+    elif key == 'menu': key = '65'
+    elif (key == 'ctrlleft') or (key == 'ctrll'): key = 'e0'
+    elif (key == 'shiftleft') or (key == 'shiftl'): key = 'e1'
+    elif (key == 'altleft') or (key == 'altl'): key = 'e2'
+    elif (key == 'metaleft') or (key == 'metal') or (key == 'winleft') or (key == 'winl'): key = 'e3'
+    elif (key == 'ctrlright') or (key == 'ctrlr'): key = 'e4'
+    elif (key == 'shiftright') or (key == 'shiftr'): key = 'e5'
+    elif (key == 'altgr') or (key == 'altr'): key = 'e6'
+    elif (key == 'metaright') or (key == 'metar') or (key == 'winright') or (key == 'winr'): key = 'e7'
+    else:
+      return
+  setKeyColorInternal(base, key, color, ext)
+
+
+def setKeyColorInternal(base, key, color, ext):
+  global dev
+  try:
+    data = base+key+color+'0000000000000000'
+    if ext is True:
+      data = data + '0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000'
+    data = [ int(''.join([data[i], data[i+1]]), base=16) for i in range(0, len(data), 2)]
+    dev.ctrl_transfer(0x21,0x09,0x0211,1,data)
+  except:
+    print 'Error setting color'
+
+
+
+if len(sys.argv) > 1:
+  if sys.argv[1] == '--help':
+    help()
+    sys.exit()
+
+main()
+

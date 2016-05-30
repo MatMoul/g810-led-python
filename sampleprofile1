@@ -1,0 +1,144 @@
+Raw1 = '960096'
+Raw2 = '600096'
+Raw3 = '300096'
+Raw4 = '000096'
+Raw5 = '003096'
+Raw6 = '006096'
+
+
+Logo = '000000'
+
+Indicators = '0096b4'
+Num = Indicators
+Caps = Indicators
+Scroll = Indicators
+
+Game = 'ff0000'
+Backlight = '000000'
+
+Multimedia = '009200'
+Mute = Multimedia
+Play = Multimedia
+Stop = Multimedia
+Prev = Multimedia
+Next = Multimedia
+
+Esc = Raw1
+
+BackSpace = Raw2
+
+Enter = Raw4
+
+PrintScreen = Raw1
+ScrollLock = Raw1
+PauseBreak = Raw1
+Insert = Raw2
+Delete = Raw3
+Home = Raw2
+End = Raw3
+PageUp = Raw2
+PageDown = Raw3
+
+
+Top = Raw5
+Left = Raw6
+Bottom = Raw6
+Right = Raw6
+
+
+Functions = Raw1
+F1 = Functions
+F2 = Functions
+F3 = Functions
+F4 = Functions
+F5 = Functions
+F6 = Functions
+F7 = Functions
+F8 = Functions
+F9 = Functions
+F10 = Functions
+F11 = Functions
+F12 = Functions
+
+NumLock = Raw2
+Num0 = Raw6
+Num1 = Raw5
+Num2 = Raw5
+Num3 = Raw5
+Num4 = Raw4
+Num5 = Raw4
+Num6 = Raw4
+Num7 = Raw3
+Num8 = Raw3
+Num9 = Raw3
+Num0 = Raw6
+NumDot = Raw6
+NumSlash = Raw2
+NumAsterisk = Raw2
+NumMinus = Raw2
+NumPlus = Raw4
+NumEnter = Raw6
+
+CapsLock = Raw4
+ShiftL = Raw5
+CtrlL = Raw6
+MetaL = Raw6
+AltL = Raw6
+AltR = Raw6
+MetaR = Raw6
+Menu = Raw6
+CtrlR = Raw6
+ShiftR = Raw5
+
+
+Degre = Raw2
+n1 = Raw2
+n2 = Raw2
+n3 = Raw2
+n4 = Raw2
+n5 = Raw2
+n6 = Raw2
+n7 = Raw2
+n8 = Raw2
+n9 = Raw2
+n0 = Raw2
+apostrophe = Raw2
+tidle = Raw2
+tab = Raw3
+q = Raw3
+w = Raw3
+e = Raw3
+r = Raw3
+t = Raw3
+z = Raw3
+u = Raw3
+i = Raw3
+o = Raw3
+p = Raw3
+openbracket = Raw3
+closebracket = Raw3
+a = Raw4
+s = Raw4
+d = Raw4
+f = Raw4
+g = Raw4
+h = Raw4
+j = Raw4
+k = Raw4
+l = Raw4
+eaigu = Raw4
+agrave = Raw4
+dollar = Raw4
+backslash = Raw5
+y = Raw5
+x = Raw5
+c = Raw5
+v = Raw5
+b = Raw5
+n = Raw5
+m = Raw5
+comma = Raw5
+dot = Raw5
+minus = Raw5
+Space = Raw6
+

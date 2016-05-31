@@ -1,6 +1,6 @@
 # g810-led
 
-Linux led controller for the Logitech G810 Keyboard
+Linux led controller for the Logitech G810 Orion Spectrum Keyboard
 
 This is a first short... Wait for a more polished version...
 

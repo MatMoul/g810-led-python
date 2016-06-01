@@ -1,6 +1,8 @@
 # g810-led
 
-Linux led controller for the Logitech G810 Orion Spectrum Keyboard
+Please check for the latest here: https://github.com/MatMoul/g810-led
+
+Linux led controller for the Logitech G810 Keyboard
 
 This is a first short... Wait for a more polished version...
 
@@ -8,7 +10,13 @@ At this time, work only as root or with sudo.
 
 Dependencies :
 - Python2
-- pyusb
+- pyusb make sure you install PyUSB v1.0.0:
+
+On Debian / Ubuntu derivatives:
+
+apt-get install python-pip
+
+pip install pyusb # (PyUSB-1.0.0.tar.gz)
 
 Use :<br />
 g810-led {key} {color}<br />

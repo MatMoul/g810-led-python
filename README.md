@@ -12,7 +12,7 @@ Dependencies :
 - Python2
 - pyusb make sure you install PyUSB v1.0.0:
 
-# On Debian / Ubuntu derivatives:
+On Debian / Ubuntu derivatives:
 apt-get install python-pip
 
 pip install pyusb # (PyUSB-1.0.0.tar.gz)

@@ -2,7 +2,7 @@
 
 Please check for the new C++ version here: https://github.com/MatMoul/g810-led
 
-Linux led controller for the Logitech G810 Keyboard
+Old Linux led controller for the Logitech G810 Keyboard
 
 This is a first short... Wait for a more polished version...
 

@@ -3,7 +3,7 @@
 Old Linux led controller for the Logitech G810 Keyboard
 
 This is my first code for reverse engineering of the G810.<br />
-This project is now unmaintained but it's a good tutorial for sendind USB RAW data in Python.<br />
+This project is now unmaintained but it's a good tutorial for sendind USB raw data in Python.<br />
 
 Please check for the new C++ version here: https://github.com/MatMoul/g810-led
 

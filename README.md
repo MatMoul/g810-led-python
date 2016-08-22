@@ -1,4 +1,4 @@
-# g810-led
+# g810-led-python
 
 Old Linux led controller for the Logitech G810 Keyboard
 
